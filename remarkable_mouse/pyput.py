@@ -70,6 +70,8 @@ def read_tablet(rm_inputs, *, orientation, monitor, threshold, mode):
     """
 
     from pynput.mouse import Button, Controller
+    mapped_x_old = 0
+    mapped_y_old = 0
 
     lifted = True
     new_x = new_y = False
@@ -120,7 +122,11 @@ def read_tablet(rm_inputs, *, orientation, monitor, threshold, mode):
                     mode, orientation
                 )
                 mouse.move(
+                    # monitor.x + (mapped_x - mapped_x_old) + mouse.position[0],
+                    # monitor.y + (mapped_y - mapped_y_old) + mouse.position[1]
                     monitor.x + mapped_x - mouse.position[0],
                     monitor.y + mapped_y - mouse.position[1]
                 )
+                mapped_x_old = mapped_x
+                mapped_y_old = mapped_y
                 new_x = new_y = False
